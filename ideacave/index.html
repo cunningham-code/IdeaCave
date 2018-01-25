@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#fff">
+
+  <title>Idea Cave</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+  function alreadyRedirect() {
+    if(localStorage.allData != null) {
+      window.location.assign("main.html");
+    }
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+		//alert("HI");
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+				}
+		}
+		return "";
+  }
+  </script>
+
+</head>
+<body id="banner" class="valign-wrapper" style="background-color: #fff" onload="alreadyRedirect()">
+
+  <script>
+
+
+    function lsTest(){
+      var test = 'test';
+      try {
+          localStorage.setItem(test, test);
+          localStorage.removeItem(test);
+          return true;
+      } catch(e) {
+          return false;
+      }
+  }
+
+  function check() {
+    if((navigator.cookieEnabled)&&(lsTest())) {
+
+      setCookie("vn", "1.0", 365);
+
+      var d = new Date();
+      var n = d.getTime();
+      setCookie("backupTime", n, 365);
+
+      window.location.assign("ideaCave.html");
+    } else {
+      alert("Your browser doesn't support cookies and local storage. Enable them in settings or use another browser.")
+    }
+
+  }
+
+  </script>
+
+  <div class="valign-wrapper row login-box">
+    <div>
+    <h1 class="left-align light" style="color: #000"><b>Idea Cave</b></h1>
+    <p id="wname" class="left-align flow-text light" style="color: #000">This is a notes tool that just does...notes.</p>
+    <a onclick="check()" id="signup" class="waves-effect btn" style="background-color: #000"><i class="material-icons" style="color: #fff">add</i></a>
+    <br>
+  </div>
+  </div>
+
+<style>
+html,
+body,
+.login-box {
+  height: 100%;
+}
+</style>
+
+<!--
+  <script>
+    $('andlink').hide();
+    $('appllink').hide();
+  </script>
+
+
+  <div class="section no-pad-bot content"  >
+    <div class="container">
+
+    </div>
+  </div>
+
+  <style>
+  #banner {
+    background-color: #6B95AC;
+
+	}
+
+  html, body, .content {
+    height: 100%;
+  }
+  </style>
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+-->
+
+
+  </body>
+</html>

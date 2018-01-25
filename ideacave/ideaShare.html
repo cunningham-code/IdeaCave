@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#ffef27">
+
+  <title>Idea Cave | My Projects</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+
+  var content = [];
+  var editm = -1;
+  var removem = -1;
+
+  function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+  }
+
+  function encode(x) {
+    return encodeURIComponent(x).replace(/'/g,"%27").replace(/"/g,"%22");
+  }
+  function decode(x) {
+    return decodeURIComponent(x.replace(/\+/g,  " "));
+  }
+
+  function getArr() {
+    alert(arr);
+  }
+
+  function getFromUrl() {
+
+    x = window.location.href;
+    alert("X is " + x);
+
+    x = x.replace(window.location.protocol, "").replace("//", "").replace(window.location.hostname, "").replace(window.location.pathname, "").substring(1);
+    alert("X is " + x);
+
+    arr = {};
+    arr = JSON.parse(decode(x));
+    alert(arr.text);
+
+    $('#ideaText').html(arr.text);
+  }
+  </script>
+</head>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large" style="background-color: #000" href="ideaCave.html">
+      <i class="large material-icons">close</i>
+    </a>
+  </div>
+
+<body style="color: #dcdcdc" onload="getFromUrl();">
+
+  <div class="section no-pad-bot" style="padding-top: 20px; margin-bottom: 20px; background-color: #000">
+
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <div class="row" style="border-color: #fff; border-left-color: #000;border-style: dotted;">
+        <div class="col s12 m12">
+          <p class="flow-text" style="color: #000" id="ideaText">We messed up somehow...that link just doesn't work.</p>
+          <a style="color: #000" href="#feedback">
+            <i style="margin: 10px; font-size: 15px; color: #000; border-color: #000; border-radius: 5px; padding: 5px; border-style: solid" class="material-icons">feedback</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="feedback" class="modal" style="background-color: #fff;">
+<div class="modal-content">
+  <h4 style="color: #000">Give Feedback:</h4>
+
+  <textarea style="color: #000" id="feedbacktxt" type="text" class="materialize-textarea" value=" "></textarea>
+
+  <br>
+  <a id="shareLink" style="word-break: break-all;">Start Typing For The Link</a>
+  <script>
+
+  $("#feedbacktxt").keyup(function() {
+    arrayFd = [$("#ideaTitle").html(), $("#ideaText").html(), document.getElementById("feedbacktxt").value];
+
+    $('#shareLink').html("http://ideacave.herokuapp.com/feedback.html#" + encode(JSON.stringify(arrayFd)));
+  });
+
+  </script>
+</div>
+<div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #000;">Edit</a>
+</div>
+
+</div>
+
+<script>
+var user = localStorage.allData;
+if (user != "") {
+    content = JSON.parse(user);
+    contentUpdate();
+}
+</script>
+
+
+<script>
+$(document).ready(function(){
+ // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+ $('.modal').modal();
+ $('.modal-trigger').leanModal();
+});
+</script>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cycle.js"></script>
+  <script src="js/json_parse_state.js"></script>
+  <script src="js/json_parse.js"></script>
+  <script src="js/json2.js"></script>
+
+  <script>
+  function replaceAll(s, find, replace) {
+    while(s.indexOf(find) != -1) {
+      s = s.replace(find, replace);
+    }
+    return s;
+  }
+
+  function filter(x) {
+    while((x.includes("\n"))||(x.includes("script>"))) {
+      x = x.replace("script>", " ").replace("\n", "<br>");
+    }
+    return x
+  }
+
+  function unFilter(x) {
+    while(x.includes("<br>")) {
+      x = x.replace("<br>", "\n");
+    }
+    return x
+  }
+  </script>
+
+
+
+  </body>
+</html>

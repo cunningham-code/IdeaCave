@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#ffef27">
+
+  <title>Idea Cave | My Projects</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+
+  var content = [];
+  var editm = -1;
+  var removem = -1;
+
+  function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+  }
+
+  function encode(x) {
+    return encodeURIComponent(x).replace(/'/g,"%27").replace(/"/g,"%22");
+  }
+  function decode(x) {
+    return decodeURIComponent(x.replace(/\+/g,  " "));
+  }
+
+  </script>
+</head>
+
+
+
+
+<body style="color: #dcdcdc; height: 100%; width: auto;">
+
+
+    <div class="row valign-wrapper wrapper" style="height: 100%">
+     <div class="valign" style="margin: 0 auto; max-width: 80%; width: 800px">
+       <div class="input-field">
+         <textarea style="height: 50px; color: #000" placeholder="What's on your mind?" id="textarea1" class="materialize-textarea"></textarea>
+         <i onclick="addmhelper()" style="font-size: 30px; color: #000; border-color: #000; border-radius: 5px; padding: 5px; border-style: solid" class="large material-icons">add</i>
+       </div>
+     </div>
+   </div>
+   <footer style="background-color: #000" class="footer center">
+       <a href="ideaCave.html"><i style="margin-top: 10px; font-size: 30px; color: #fff; " class="large material-icons">menu</i></a>
+   </footer>
+
+
+   <script>
+   function addmhelper() {
+     var te = document.getElementById("textarea1").value;
+     var x = {
+       text: te,
+       labels: [],
+       feedback: []
+     };
+
+     content.push(x);
+     Materialize.toast('Got it.', 4000);
+     document.getElementById("textarea1").value = "";
+     localStorage.allData = JSON.stringify(content);
+
+   }
+   </script>
+
+
+<script>
+$(document).ready(function(){
+ $('.modal').modal();
+ $('.modal-trigger').leanModal();
+});
+</script>
+
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cycle.js"></script>
+  <script src="js/json_parse_state.js"></script>
+  <script src="js/json_parse.js"></script>
+  <script src="js/json2.js"></script>
+
+  <script>
+  function replaceAll(s, find, replace) {
+    while(s.indexOf(find) != -1) {
+      s = s.replace(find, replace);
+    }
+    return s;
+  }
+  </script>
+
+  <script>
+  var user = localStorage.allData;
+  if (user != "") {
+      content = JSON.parse(user);
+  }
+  </script>
+
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  .wrapper {
+    min-height: 100%;
+
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -50px;
+  }
+  .footer,
+  .push {
+    height: 50px;
+  }
+  </style>
+
+  </body>
+</html>

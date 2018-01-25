@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#000">
+  <script src="js/FileSaver.js"></script>
+
+  <title>Idea Cave | Settings</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+  var content = [];
+  var editm = -1;
+  var removem = -1;
+
+  function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+  }
+
+  function encode(x) {
+    return encodeURIComponent(x).replace(/'/g,"%27").replace(/"/g,"%22");
+  }
+  function decode(x) {
+    return decodeURIComponent(x.replace(/\+/g,  " "));
+  }
+
+  </script>
+</head>
+
+<body style="color: #dcdcdc">
+
+  <div class="fixed-action-btn">
+      <a class="btn-floating btn-large" style="background-color: #000" href="main.html">
+        <i class="large material-icons">close</i>
+      </a>
+    </div>
+
+  <div class="section no-pad-bot" style="padding-bottom: 50px; background-color: #000">
+    <div class="container">
+        <h1 class="left-align light" style="color: #fff"><b>Settings</b></h1>
+    </div>
+  </div>
+
+
+  <div class="row">
+   <div class="col s12 m12">
+     <div class="card white">
+       <div class="card-content" style="color: #000;">
+
+         <span class="title"><h4><b>Add To Homescreen</b></h4></span>
+         <p>Go back to the main page.</p>
+         <p><b>On iOS: </b> Click the share button on the bottom. Scroll to the "Add To Homescreen" option.</p>
+         <p><b>On Android: </b> Click the three vertical dots in the upper right hand corner. Click the "Add To Homescreen" option.</p>
+
+         <hr style="margin: 30px">
+
+         <span class="title"><h4><b>Backup Your Ideas</b></h4></span>
+         <a style="color: #000" id="save-btn">Save Text file</a>
+         <script>
+
+         function unFilter(x) {
+           while(x.includes("<br>")) {
+             x = x.replace("<br>", " | \n");
+           }
+           return x
+         }
+
+         function exportFilter() {
+           var final = [""];
+           var data = JSON.parse(localStorage.allData);
+           //alert(data);
+           for(var c = 0; c < data.length; c++) {
+             var tempAr = data[c];
+             final[0] = final[0] + "|" + (c+1) + "| " + unFilter(tempAr[0]) + " \n" + unFilter(tempAr[1]);
+             if(c != (data.length - 1)) {
+               final[0] = final[0]  + "\n --- \n \n";
+             }
+           }
+           //alert(final);
+           return final;
+
+         }
+
+         function getmili() {
+           var d = new Date();
+           return d.getTime();
+         }
+
+         $("#save-btn").click(function() {
+           var blob = new Blob(exportFilter(), {
+             type: "text/plain;charset=utf-8"
+           });
+           saveAs(blob, "IdeaCaveExport" + getmili() + ".txt");
+
+           var d = new Date();
+           var n = d.getTime();
+           setCookie("backupTime", n, 365);
+         });
+
+         </script>
+
+         <hr style="margin: 30px">
+
+         <!--
+         <span class="title"><h4><b>Random Project Name</b></h4></span>
+         <br>
+
+         <a class='dropdown-button btn black' href='#' data-activates='dropdown1'>Options</a>
+
+
+         <ul id='dropdown1' class='dropdown-content'>
+           <li><a href="#!" style="color: #000">No Name</a></li>
+           <li class="divider"></li>
+           <li><a href="#!" style="color: #000">Operation [RANDOM]</a></li>
+           <li><a href="#!" style="color: #000">Project [RANDOM]</a></li>
+         </ul>
+
+        <hr style="margin: 30px">
+-->
+        <h4><b>Delete Everything</b></h4>
+        <p id="deleteTxt" onclick="$('#deleteCard').show(); $('#deleteTxt').hide();">Click Here To Delete Everything</p>
+
+        <script>
+        function deleteEverything() {
+          //alert('All Deleted!');
+          //alert("STORAGE " + localStorage.allData);
+          localStorage.allData = "";
+          //alert("STORAGE " + localStorage.allData);
+          //alert("COOKIES " + document.cookies);
+          document.cookies = '';
+          //alert("COOKIES " + document.cookies);
+          location.reload();
+
+        }
+        </script>
+
+        <div class="row" id="deleteCard" onclick="deleteEverything()">
+         <div class="col">
+           <div class="card-panel red">
+             <span class="white-text" >Click Here If You Seriously Want To Delete Everything</span>
+           </div>
+         </div>
+       </div>
+
+       <script>
+
+       $('#deleteCard').hide();
+
+       </script>
+
+       </div>
+     </div>
+     <hr style="margin: 40px">
+   </div>
+  </div>
+
+
+  <style>
+  #banner {
+		background-color: #1E91D6;
+		padding: 4em 0 4em;
+
+	}
+  </style>
+
+  <script>
+  function edithelper() {
+    //alert("HELLO I AM THE EDIT HELPER");
+
+    //alert(editm);
+    //alert(content);
+    document.getElementById("first_name_edit").value = content[editm][0];
+    document.getElementById("textarea1_edit").value = content[editm][1];
+
+  }
+
+  function edit() {
+    content[editm][0] = document.getElementById("first_name_edit").value;
+    content[editm][1] = document.getElementById("textarea1_edit").value;
+    contentUpdate();
+    //alert("EDITTING: " + JSON.stringify(content));
+    localStorage.allData = JSON.stringify(content);
+  }
+
+
+  function deleteTask() {
+    content.splice(editm, 1);
+    //alert("CONTETN IS NOW " + content);
+    contentUpdate();
+    //alert("DELETELING: " + JSON.stringify(content));
+    localStorage.allData = JSON.stringify(content);
+  }
+
+
+  </script>
+
+<div class="container">
+  <div class="section" id="mainc">
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+
+</div>
+</div>
+
+<!-- Modal Structure -->
+
+<!--
+<div id="addm" class="modal white-text" style="background-color: #fff;">
+<div class="modal-content">
+  <h4>Add Your Project:</h4>
+  <br>
+  <div class="row">
+       <div class="input-field col s12">
+         <input id="first_name" type="text" class="validate">
+         <label for="first_name">Title</label>
+       </div>
+  </div>
+  <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Notes</label>
+  </div>
+  </div>
+</div>
+<div class="modal-footer">
+      <a onclick="addmhelper()" class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #2965A0;">Add</a>
+</div>
+
+</div>
+-->
+
+<!-- Modal Structure -->
+<div id="editm" class="modal" style="background-color: #fff;">
+<div class="modal-content">
+  <h4 style="color: #000">Edit Your Project:</h4>
+  <br>
+  <div class="row">
+       <div class="input-field col s12">
+         <input style="color: #000" id="first_name_edit" type="text" class="validate" value=" ">
+         <label for="first_name_edit">Title</label>
+       </div>
+  </div>
+  <div class="row">
+        <div class="input-field col s12">
+          <textarea style="color: #000" id="textarea1_edit" type="text" class="materialize-textarea" value=" "></textarea>
+          <label for="textarea1_edit"></label>
+        </div>
+  </div>
+</div>
+<div class="modal-footer">
+      <a onclick="edit()" class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #000;">Edit</a>
+</div>
+
+</div>
+
+<div id="share" class="modal" style="background-color: #fff;">
+<div class="modal-content">
+  <h4 style="color: #000">Share:</h4>
+  <br>
+  <p id="shareLink">HELLO</p>
+</div>
+<div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #000;">Edit</a>
+</div>
+
+</div>
+
+<script>
+var user = localStorage.allData;
+if (user != "") {
+    content = JSON.parse(user);
+    contentUpdate();
+}
+</script>
+
+
+<script>
+$(document).ready(function(){
+ // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+ $('.modal').modal();
+ $('.modal-trigger').leanModal();
+});
+</script>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cycle.js"></script>
+  <script src="js/json_parse_state.js"></script>
+  <script src="js/json_parse.js"></script>
+  <script src="js/json2.js"></script>
+
+
+
+  </body>
+</html>

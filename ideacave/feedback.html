@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#ffef27">
+
+  <title>Idea Cave | My Projects</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+
+  var content = [];
+  var editm = -1;
+  var removem = -1;
+
+  function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+      return "";
+  }
+
+  function encode(x) {
+    return encodeURIComponent(x).replace(/'/g,"%27").replace(/"/g,"%22");
+  }
+  function decode(x) {
+    return decodeURIComponent(x.replace(/\+/g,  " "));
+  }
+
+  function getArr() {
+    alert(arr);
+  }
+
+  function getFromUrl() {
+    x = window.location.href;
+    //alert("X is " + x);
+    x = x.replace(window.location.protocol, "").replace("//", "").replace(window.location.hostname, "").replace(window.location.pathname, "").substring(1);
+    //alert("X is " + x);
+    x = decode(x);
+    arr = JSON.parse(x);
+
+    $('#ideaTitle').html(arr[0]);
+    $('#ideaText').html(arr[1]);
+    $('#fb').html(arr[2]);
+  }
+
+  </script>
+</head>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large" style="background-color: #000" href="main.html">
+      <i class="large material-icons">close</i>
+    </a>
+  </div>
+
+<body style="color: #dcdcdc" onload="getFromUrl();">
+
+  <div class="section no-pad-bot" style="padding-top: 20px; margin-bottom: 20px; background-color: #ffef27">
+
+  </div>
+
+<div class="row">
+    <div class="col">
+      <div class="card-panel black">
+        <span class="white-text" id="fb">Huh, no feedback was found.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+   <div class="col s12 m12">
+     <div class="card white">
+       <div class="card-content" style="color: #000;">
+         <!--
+         <span class="card-title"><b>Add Your Project:</b></span>
+
+         2965A0
+       -->
+         <div class="row">
+              <b><h3 id="ideaTitle">Weird...</h3></b>
+         </div>
+         <div class="row">
+              <p id="ideaText">We messed up somehow...that link just doesn't work.</p>
+         </div>
+         <!--
+         <div class="card-action">
+           <a onclick="addFeedback()" class="left-align" style="color: #000;">Add Feedback To My Idea</a>
+         </div>
+       -->
+       </div>
+
+
+     </div>
+     <hr style="margin: 40px">
+   </div>
+  </div>
+
+<div class="container">
+  <div class="section" id="mainc">
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+
+</div>
+</div>
+
+<script>
+
+
+
+function addFeedback() {
+  //alert("HI");
+
+  var title = $('#ideaTitle').html();
+  var text = $('#ideaText').html() + "\n\n" + "Feedback: " + $('#fb').html();
+
+  var x = [title, text];
+
+  content.push(x);
+  Materialize.toast('Got it. Added ' + $('#ideaTitle').html(), 4000);
+  localStorage.allData = JSON.stringify(content);
+}
+
+
+/*
+function contentUpdate() {
+  var str = "";
+  for(var c = 0; c < content.length; c++) {
+    str = str + '<div class="row"><div class="col s12 m12"><div class="card " style="background-color: #fff;"><div class="card-content" style="color: #000"><span class="card-title"><b>' + content[c][0] + '</b></span><p>' + content[c][1] +'</p><br><a style="color: #000" onclick="editm = ' + c + '; edithelper()" href="#editm"><i class="material-icons">mode_edit</i></a><a style="color: #000" onclick="editm = ' + c + '; deleteTask()"><i class="material-icons">delete</i></a><a style="color: #000" onclick="$(\'#shareLink\').html(encode(content[' + c + ']));" href="#share"><i class="material-icons">share</i></a></div></div></div></div>';
+    // $(\'shareLink\').html(encode(content[' + c + ']))
+  }
+  $("#mainc").html(str);
+}
+*/
+</script>
+
+<!-- Modal Structure -->
+
+<!--
+<div id="addm" class="modal white-text" style="background-color: #fff;">
+<div class="modal-content">
+  <h4>Add Your Project:</h4>
+  <br>
+  <div class="row">
+       <div class="input-field col s12">
+         <input id="first_name" type="text" class="validate">
+         <label for="first_name">Title</label>
+       </div>
+  </div>
+  <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Notes</label>
+  </div>
+  </div>
+</div>
+<div class="modal-footer">
+      <a onclick="addmhelper()" class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #2965A0;">Add</a>
+</div>
+
+</div>
+-->
+
+<!-- Modal Structure
+<div id="editm" class="modal" style="background-color: #fff;">
+<div class="modal-content">
+  <h4 style="color: #000">Edit Your Project:</h4>
+  <br>
+  <div class="row">
+       <div class="input-field col s12">
+         <input style="color: #000" id="first_name_edit" type="text" class="validate" value=" ">
+         <label for="first_name_edit">Title</label>
+       </div>
+  </div>
+  <div class="row">
+        <div class="input-field col s12">
+          <textarea style="color: #000" id="textarea1_edit" type="text" class="materialize-textarea" value=" "></textarea>
+          <label for="textarea1_edit"></label>
+        </div>
+  </div>
+</div>
+<div class="modal-footer">
+      <a onclick="edit()" class="modal-action modal-close waves-effect waves-green btn-flat left-align" style="color: #000;">Edit</a>
+</div>
+
+</div>
+-->
+
+
+<script>
+var user = localStorage.allData;
+if (user != "") {
+    content = JSON.parse(user);
+    contentUpdate();
+}
+</script>
+
+
+<script>
+$(document).ready(function(){
+ // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+ $('.modal').modal();
+ $('.modal-trigger').leanModal();
+});
+</script>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cycle.js"></script>
+  <script src="js/json_parse_state.js"></script>
+  <script src="js/json_parse.js"></script>
+  <script src="js/json2.js"></script>
+
+  <script>
+  function replaceAll(s, find, replace) {
+    while(s.indexOf(find) != -1) {
+      s = s.replace(find, replace);
+    }
+    return s;
+  }
+
+  function filter(x) {
+    while((x.includes("\n"))||(x.includes("script>"))) {
+      x = x.replace("script>", " ").replace("\n", "<br>");
+    }
+    return x
+  }
+
+  function unFilter(x) {
+    while(x.includes("<br>")) {
+      x = x.replace("<br>", "\n");
+    }
+    return x
+  }
+  </script>
+
+
+
+  </body>
+</html>

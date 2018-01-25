@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link name="msapplication-square150x150logo" content="mslogo.png">
+  <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+  <meta name="theme-color" content="#fff">
+  
+
+  <title>Idea Cave | Export</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script>
+    function encode(x) {
+    	return encodeURIComponent(x).replace(/'/g,"%27").replace(/"/g,"%22");
+    }
+    function decode() {
+    	var obj = document.getElementById('dencoder');
+    	var encoded = obj.value;
+    	obj.value = decodeURIComponent(encoded.replace(/\+/g,  " "));
+    }
+  </script>
+
+</head>
+<body id="banner" class="valign-wrapper" style="background-color: #fff">
+
+  <div class="valign-wrapper row login-box">
+    <div style="max-width: 85%;">
+    <h1 class="left-align light" style="color: #000"><b>Export</b></h1>
+    <p id="link" class="left-align flow-text light" style=" color: #000; word-wrap: break-word;">Crap, we f'ed up somehow</p>
+    <a href="main.html" id="signup" class="waves-effect btn black" style="background-color: #000"><i class="material-icons" style="color: #fff">content_copy</i></a>
+    <script>
+      var data = localStorage.allData;
+      $("#link").html(encode(data));
+      //$("#link").html(window.location.pathname + encode(data));
+    </script>
+    <hr>
+    <br>
+
+    <script>
+
+
+
+
+
+    </script>
+  </div>
+  </div>
+
+<style>
+html,
+body,
+.login-box {
+  height: 100%;
+}
+</style>
+
+<!--
+  <script>
+    $('andlink').hide();
+    $('appllink').hide();
+  </script>
+
+
+  <div class="section no-pad-bot content"  >
+    <div class="container">
+
+    </div>
+  </div>
+
+  <style>
+  #banner {
+    background-color: #6B95AC;
+
+	}
+
+  html, body, .content {
+    height: 100%;
+  }
+  </style>
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+-->
+
+
+  </body>
+</html>
